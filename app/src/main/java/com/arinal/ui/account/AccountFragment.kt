@@ -3,11 +3,11 @@ package com.arinal.ui.account
 import androidx.navigation.fragment.findNavController
 import com.arinal.R
 import com.arinal.common.EventObserver
-import com.arinal.databinding.FragmentRegisterBinding
+import com.arinal.databinding.FragmentAccountBinding
 import com.arinal.ui.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class AccountFragment : BaseFragment<FragmentRegisterBinding, AccountViewModel>() {
+class AccountFragment : BaseFragment<FragmentAccountBinding, AccountViewModel>() {
 
     override val viewModel: AccountViewModel by sharedViewModel()
 

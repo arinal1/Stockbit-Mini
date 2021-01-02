@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_11sdp"
             android:backgroundTint="@android:color/transparent"
-            android:visibility="@{viewModel.isBackVisible ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.isOnRegister ? View.VISIBLE : View.GONE}"
             app:cardCornerRadius="@dimen/value_16"
             app:cardElevation="@dimen/match_constraint"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
@@ -75,6 +75,31 @@
                 android:src="@drawable/ic_help" />
         </androidx.cardview.widget.CardView>
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isOnRegister() ? View.VISIBLE : View.GONE}"
+            app:constraint_referenced_ids="v_progress_background, v_progress" />
+
+        <View
+            android:id="@+id/v_progress_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:background="@color/color_primary_variant"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <View
+            android:id="@+id/v_progress"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="@dimen/_2sdp"
+            android:background="@color/color_primary"
+            app:bindWidthPercentage="@{viewModel.progress}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintWidth_default="percent"
+            tools:layout_constraintWidth_percent=".3" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -82,7 +107,7 @@
             android:layout_height="@dimen/match_constraint"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/v_progress"
             app:navGraph="@navigation/nav_account" />
 
         <androidx.constraintlayout.widget.Group

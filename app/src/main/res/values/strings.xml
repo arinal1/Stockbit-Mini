@@ -18,4 +18,12 @@
     <string name="google_login_failed">Gagal login dengan google</string>
     <string name="logout">Logout</string>
     <string name="back">Back</string>
+    <string name="register_email_title">Apa Alamat Email Kamu?</string>
+    <string name="register_email_subtitle">Email akan digunakan untuk login dan reset password kamu sewaktu kamu lupa.</string>
+    <string name="register_name_title">Siapa Nama Lengkap Kamu?</string>
+    <string name="register_name_subtitle">Gunakan nama aslimu untuk membangun hubungan di komunitas.</string>
+    <string name="register_password_title">Buat Password kamu</string>
+    <string name="register_password_subtitle">Masukkan minimal 6 karakter.</string>
+    <string name="selanjutnya">Selanjutnya</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
 </resources>

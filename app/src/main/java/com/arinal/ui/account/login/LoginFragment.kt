@@ -67,7 +67,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
 
     override fun initViews() {
         viewModel.title.value = getString(R.string.masuk)
-        viewModel.isBackVisible.value = false
+        viewModel.isOnRegister.value = false
+        viewModel.setProgress(0)
         when (context?.resources?.configuration?.uiMode?.and(UI_MODE_NIGHT_MASK)) {
             UI_MODE_NIGHT_YES -> {
                 binding.tvForgetPassword.onTouchDarkerEffect()

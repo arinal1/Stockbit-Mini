@@ -11,15 +11,41 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment"
+            app:destination="@id/registerEmailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.arinal.ui.account.register.RegisterFragment"
+        android:id="@+id/registerEmailFragment"
+        android:name="com.arinal.ui.account.register.RegisterEmailFragment"
         android:label="RegisterFragment"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register_email">
+        <action
+            android:id="@+id/action_registerEmailFragment_to_registerNameFragment"
+            app:destination="@id/registerNameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerNameFragment"
+        android:name="com.arinal.ui.account.register.RegisterNameFragment"
+        android:label="RegisterNameFragment"
+        tools:layout="@layout/fragment_register_name">
+        <action
+            android:id="@+id/action_registerNameFragment_to_registerPasswordFragment"
+            app:destination="@id/registerPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPasswordFragment"
+        android:name="com.arinal.ui.account.register.RegisterPasswordFragment"
+        android:label="RegisterPasswordFragment"
+        tools:layout="@layout/fragment_register_password" />
 </navigation>
