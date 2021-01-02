@@ -4,7 +4,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.arinal.R
 import com.arinal.common.preferences.PreferencesHelper
-import com.arinal.common.preferences.PreferencesKey.ACCOUNT_ID
+import com.arinal.common.preferences.PreferencesKey.USER_ID
 import com.arinal.databinding.FragmentSplashBinding
 import com.arinal.ui.MainViewModel
 import com.arinal.ui.base.BaseFragment
@@ -24,7 +24,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, MainViewModel>() {
         lifecycleScope.launch {
             delay(1500)
             findNavController().navigate(
-                if (prefHelper.getString(ACCOUNT_ID) == "") R.id.action_splashFragment_to_loginFragment
+                if (prefHelper.getString(USER_ID) == "") R.id.action_splashFragment_to_loginFragment
                 else R.id.action_splashFragment_to_homeFragment
             )
         }

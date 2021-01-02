@@ -1,17 +1,38 @@
 package com.arinal.ui.home
 
+import androidx.navigation.fragment.findNavController
 import com.arinal.R
+import com.arinal.common.Constants
+import com.arinal.common.preferences.PreferencesHelper
+import com.arinal.common.preferences.PreferencesKey
 import com.arinal.databinding.FragmentHomeBinding
-import com.arinal.ui.MainViewModel
 import com.arinal.ui.base.BaseFragment
+import com.facebook.login.LoginManager
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class HomeFragment : BaseFragment<FragmentHomeBinding, MainViewModel>() {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
-    override val viewModel: MainViewModel by sharedViewModel()
+    private val prefHelper: PreferencesHelper by inject()
+    override val viewModel: HomeViewModel by sharedViewModel()
 
     override fun setLayout() = R.layout.fragment_home
 
-    override fun observeLiveData() = Unit
+    override fun observeLiveData() {
+        binding.btnLogout.setOnClickListener { logout() }
+    }
+
+    private fun logout() {
+        Firebase.auth.signOut()
+        prefHelper.clearPreference(PreferencesKey.USER_ID)
+        prefHelper.clearPreference(PreferencesKey.USER_NAME)
+        prefHelper.clearPreference(PreferencesKey.USER_EMAIL)
+        when (prefHelper.getString(PreferencesKey.USER_LOGIN_METHOD)) {
+            Constants.FACEBOOK -> LoginManager.getInstance().logOut()
+        }
+        findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+    }
 
 }

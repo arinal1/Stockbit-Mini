@@ -52,6 +52,7 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:contentDescription="@string/help"
+                    android:onClick="@{()->viewModel.goToHelp()}"
                     android:padding="@dimen/value_4"
                     android:src="@drawable/ic_help" />
             </androidx.cardview.widget.CardView>
@@ -62,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
                 android:backgroundTint="@color/color_on_primary"
+                android:onClick="@{()->viewModel.googleLogin()}"
                 android:text="@string/masuk_dengan_google"
                 android:textAllCaps="false"
                 android:textColor="@color/color_primary"
@@ -86,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:backgroundTint="@color/color_on_primary"
+                android:onClick="@{()->viewModel.facebookLogin()}"
                 android:text="@string/masuk_dengan_facebook"
                 android:textAllCaps="false"
                 android:textColor="@color/color_primary"
@@ -147,7 +150,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="@={viewModel.email}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -169,7 +173,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
                     android:inputType="textPassword"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="@={viewModel.password}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -178,6 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_11sdp"
+                android:onClick="@{()->viewModel.forgetPassword()}"
                 android:padding="@dimen/_5sdp"
                 android:text="@string/lupa_password"
                 android:textStyle="bold"
@@ -189,6 +195,7 @@
                 android:layout_width="@dimen/match_constraint"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
+                android:onClick="@{()->viewModel.emailLogin()}"
                 android:text="@string/login"
                 android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="@id/btn_login_google"
@@ -200,6 +207,7 @@
                 android:layout_width="@dimen/match_constraint"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
+                android:onClick="@{()->viewModel.fingerprintLogin()}"
                 android:text="@string/masuk_dengan_fingerprint"
                 android:textAllCaps="false"
                 android:textColor="@color/color_primary"
@@ -233,6 +241,7 @@
                 android:id="@+id/tv_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.register()}"
                 android:padding="@dimen/_5sdp"
                 android:text="@string/daftar_sekarang"
                 android:textColor="@color/color_primary"
@@ -255,6 +264,7 @@
                 android:id="@+id/group_progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
                 app:constraint_referenced_ids="v_progress_bar, progress_bar"
                 tools:visibility="gone" />
 

@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.arinal.BR
+import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
 
@@ -30,5 +31,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
 
     open fun initViews() = Unit
     abstract fun observeLiveData()
+
+    fun showSnackBar(message:String) = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
 
 }

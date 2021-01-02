@@ -13,4 +13,6 @@
     <string name="belum_punya_akun">Belum punya akun?</string>
     <string name="daftar_sekarang">Daftar sekarang</string>
     <string name="help">Help</string>
+    <string name="facebook_login_failed">Gagal login dengan facebook</string>
+    <string name="logout">Logout</string>
 </resources>
