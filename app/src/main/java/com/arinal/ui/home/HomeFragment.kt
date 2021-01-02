@@ -46,7 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
         }
         prefHelper.clearPreference(PreferencesKey.USER_LOGIN_METHOD)
-        findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+        findNavController().navigate(R.id.action_homeFragment_to_accountFragment)
     }
 
 }

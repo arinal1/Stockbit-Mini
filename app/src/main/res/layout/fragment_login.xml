@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="viewModel"
-            type="com.arinal.ui.login.LoginViewModel" />
+            type="com.arinal.ui.account.AccountViewModel" />
     </data>
 
     <ScrollView
@@ -23,39 +20,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:gravity="center_vertical"
-                android:text="@string/masuk"
-                android:textSize="@dimen/text_18"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_11sdp"
-                app:cardCornerRadius="@dimen/value_14"
-                app:cardElevation="@dimen/match_constraint"
-                app:layout_constraintBottom_toBottomOf="@id/tv_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_title">
-
-                <ImageButton
-                    android:id="@+id/btn_help"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:contentDescription="@string/help"
-                    android:onClick="@{()->viewModel.goToHelp()}"
-                    android:padding="@dimen/value_4"
-                    android:src="@drawable/ic_help" />
-            </androidx.cardview.widget.CardView>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_login_google"
@@ -72,7 +36,7 @@
                 app:iconTint="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintTop_toTopOf="parent"
                 app:rippleColor="@color/color_ripple" />
 
             <com.facebook.login.widget.LoginButton
@@ -259,33 +223,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_register"
                 app:layout_constraintTop_toTopOf="@+id/tv_register_message" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group_progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{viewModel.isLoading() ? View.VISIBLE : View.GONE}"
-                app:constraint_referenced_ids="v_progress_bar, progress_bar"
-                tools:visibility="gone" />
-
-            <View
-                android:id="@+id/v_progress_bar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_modal_background"
-                android:clickable="true"
-                android:focusable="true"
-                android:translationZ="@dimen/_3sdp" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:translationZ="@dimen/_3sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

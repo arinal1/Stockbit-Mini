@@ -25,6 +25,7 @@ fun TextView.onTouchColorEffect(effectColor: Int) {
         val color = if (event.action == ACTION_UP) defaultColor else onTouchColor
         setTextColor(color)
         for (drawable in compoundDrawables) drawable?.colorFilter = PorterDuffColorFilter(color, SRC_IN)
-        performClick()
+        if (event.action == ACTION_UP) performClick()
+        else true
     }
 }

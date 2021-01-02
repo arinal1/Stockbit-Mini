@@ -1,4 +1,4 @@
-package com.arinal.ui.login
+package com.arinal.ui.account.login
 
 import android.content.Intent
 import android.content.res.Configuration.*
@@ -11,6 +11,7 @@ import com.arinal.common.onTouchDarkerEffect
 import com.arinal.common.preferences.PreferencesHelper
 import com.arinal.common.preferences.PreferencesKey
 import com.arinal.databinding.FragmentLoginBinding
+import com.arinal.ui.account.AccountViewModel
 import com.arinal.ui.base.BaseFragment
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -27,7 +28,7 @@ import com.google.firebase.ktx.Firebase
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
 
     private val auth by lazy { Firebase.auth }
     private val callbackManager by lazy { CallbackManager.Factory.create() }
@@ -39,37 +40,34 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
             .build()
     }
     private val prefHelper: PreferencesHelper by inject()
-    override val viewModel: LoginViewModel by sharedViewModel()
+    override val viewModel: AccountViewModel by sharedViewModel()
 
     override fun setLayout() = R.layout.fragment_login
 
-    override fun observeLiveData() {
-        with(viewModel) {
-            googleLogin.observe(viewLifecycleOwner, EventObserver {
-                startActivityForResult(googleSignInIntent, Constants.REQ_CODE_GOOGLE)
-            })
-            facebookLogin.observe(viewLifecycleOwner, EventObserver {
-                binding.facebookLogin.callOnClick()
-            })
-            emailLogin.observe(viewLifecycleOwner, EventObserver {
+    override fun observeLiveData() = with(viewModel) {
+        googleLogin.observe(viewLifecycleOwner, EventObserver {
+            startActivityForResult(googleSignInIntent, Constants.REQ_CODE_GOOGLE)
+        })
+        facebookLogin.observe(viewLifecycleOwner, EventObserver {
+            binding.facebookLogin.callOnClick()
+        })
+        emailLogin.observe(viewLifecycleOwner, EventObserver {
 
-            })
-            fingerprintLogin.observe(viewLifecycleOwner, EventObserver {
+        })
+        fingerprintLogin.observe(viewLifecycleOwner, EventObserver {
 
-            })
-            register.observe(viewLifecycleOwner, EventObserver {
+        })
+        register.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        })
+        forgetPassword.observe(viewLifecycleOwner, EventObserver {
 
-            })
-            forgetPassword.observe(viewLifecycleOwner, EventObserver {
-
-            })
-            goToHelp.observe(viewLifecycleOwner, EventObserver {
-
-            })
-        }
+        })
     }
 
     override fun initViews() {
+        viewModel.title.value = getString(R.string.masuk)
+        viewModel.isBackVisible.value = false
         when (context?.resources?.configuration?.uiMode?.and(UI_MODE_NIGHT_MASK)) {
             UI_MODE_NIGHT_YES -> {
                 binding.tvForgetPassword.onTouchDarkerEffect()
@@ -131,7 +129,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
                 prefHelper.setString(PreferencesKey.USER_NAME, user?.displayName ?: "")
                 prefHelper.setString(PreferencesKey.USER_EMAIL, user?.email ?: "")
                 prefHelper.setString(PreferencesKey.USER_LOGIN_METHOD, method)
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                viewModel.navigateToHome()
             }
             viewModel.showLoading(false)
         }

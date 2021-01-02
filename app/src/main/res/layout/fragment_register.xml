@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.arinal.ui.register.RegisterViewModel" />
+            type="com.arinal.ui.account.AccountViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

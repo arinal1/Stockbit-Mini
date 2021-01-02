@@ -24,7 +24,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, MainViewModel>() {
         lifecycleScope.launch {
             delay(1500)
             findNavController().navigate(
-                if (prefHelper.getString(USER_ID) == "") R.id.action_splashFragment_to_loginFragment
+                if (prefHelper.getString(USER_ID) == "") R.id.action_splashFragment_to_accountFragment
                 else R.id.action_splashFragment_to_homeFragment
             )
         }

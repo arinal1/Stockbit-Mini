@@ -1,11 +1,14 @@
-package com.arinal.ui.login
+package com.arinal.ui.account
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.arinal.common.Event
 
-class LoginViewModel : ViewModel() {
+class AccountViewModel : ViewModel() {
+
+    val title = MutableLiveData("")
+    val isBackVisible = MutableLiveData(false)
 
     val email = MutableLiveData("")
     val password = MutableLiveData("")
@@ -36,8 +39,16 @@ class LoginViewModel : ViewModel() {
     val forgetPassword: LiveData<Event<Unit>> get() = _forgetPassword
     fun forgetPassword() = _forgetPassword.postValue(Event(Unit))
 
-    private val _goToHelp = MutableLiveData<Event<Unit>>()
-    val goToHelp: LiveData<Event<Unit>> get() = _goToHelp
-    fun goToHelp() = _goToHelp.postValue(Event(Unit))
+    private val _navigateBack = MutableLiveData<Event<Unit>>()
+    val navigateBack: LiveData<Event<Unit>> get() = _navigateBack
+    fun navigateBack() = _navigateBack.postValue(Event(Unit))
+
+    private val _navigateToHelp = MutableLiveData<Event<Unit>>()
+    val navigateToHelp: LiveData<Event<Unit>> get() = _navigateToHelp
+    fun navigateToHelp() = _navigateToHelp.postValue(Event(Unit))
+
+    private val _navigateToHome = MutableLiveData<Event<Unit>>()
+    val navigateToHome: LiveData<Event<Unit>> get() = _navigateToHome
+    fun navigateToHome() = _navigateToHome.postValue(Event(Unit))
 
 }
