@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -38,7 +39,6 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
-    implementation "com.google.android.gms:play-services-auth:$gmsVersion"
 
     implementation "org.koin:koin-android:$koinVersion"
     implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
@@ -49,6 +49,11 @@ dependencies {
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+    implementation platform("com.google.firebase:firebase-bom:$firebaseVersion")
+    implementation "com.google.android.gms:play-services-auth:$gmsVersion"
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation "com.facebook.android:facebook-login:$facebookVersion"
 
     implementation project(':data')
     implementation project(':common')

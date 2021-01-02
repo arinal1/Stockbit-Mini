@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,9 +12,270 @@
             type="com.arinal.ui.login.LoginViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center_vertical"
+                android:text="@string/masuk"
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_11sdp"
+                app:cardCornerRadius="@dimen/value_14"
+                app:cardElevation="@dimen/match_constraint"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_title">
+
+                <ImageButton
+                    android:id="@+id/btn_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:contentDescription="@string/help"
+                    android:padding="@dimen/value_4"
+                    android:src="@drawable/ic_help" />
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login_google"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                android:backgroundTint="@color/color_on_primary"
+                android:text="@string/masuk_dengan_google"
+                android:textAllCaps="false"
+                android:textColor="@color/color_primary"
+                app:icon="@drawable/ic_google_icon"
+                app:iconGravity="start"
+                app:iconTint="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:rippleColor="@color/color_ripple" />
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/facebook_login"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="@dimen/match_constraint"
+                app:layout_constraintStart_toStartOf="@id/btn_login_facebook"
+                app:layout_constraintTop_toTopOf="@id/btn_login_facebook" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login_facebook"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:backgroundTint="@color/color_on_primary"
+                android:text="@string/masuk_dengan_facebook"
+                android:textAllCaps="false"
+                android:textColor="@color/color_primary"
+                app:icon="@drawable/ic_facebook"
+                app:iconGravity="start"
+                app:iconTint="@null"
+                app:layout_constraintEnd_toEndOf="@id/btn_login_google"
+                app:layout_constraintStart_toStartOf="@id/btn_login_google"
+                app:layout_constraintTop_toBottomOf="@id/btn_login_google"
+                app:rippleColor="@color/color_ripple" />
+
+            <View
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@color/color_separator"
+                app:layout_constraintBottom_toBottomOf="@id/tv_atau"
+                app:layout_constraintEnd_toStartOf="@id/tv_atau"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_atau" />
+
+            <TextView
+                android:id="@+id/tv_atau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/atau"
+                android:textColor="@color/color_text_secondary"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_login_facebook" />
+
+            <View
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@color/color_separator"
+                app:layout_constraintBottom_toBottomOf="@id/tv_atau"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_atau"
+                app:layout_constraintTop_toTopOf="@id/tv_atau" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                app:boxBackgroundColor="@null"
+                app:boxStrokeColor="@color/color_text_secondary"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/tv_atau">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:boxBackgroundColor="@null"
+                app:boxStrokeColor="@color/color_text_secondary"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/til_email"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/color_text_secondary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_11sdp"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/lupa_password"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_password" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/login"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="@id/btn_login_google"
+                app:layout_constraintStart_toStartOf="@id/btn_login_google"
+                app:layout_constraintTop_toBottomOf="@+id/tv_forget_password" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_fingerprint"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/masuk_dengan_fingerprint"
+                android:textAllCaps="false"
+                android:textColor="@color/color_primary"
+                app:backgroundTint="@color/color_on_primary"
+                app:layout_constraintEnd_toEndOf="@id/btn_login_google"
+                app:layout_constraintStart_toStartOf="@id/btn_login_google"
+                app:layout_constraintTop_toBottomOf="@+id/btn_login"
+                app:rippleColor="@color/color_ripple"
+                app:strokeColor="@color/color_primary"
+                app:strokeWidth="@dimen/_1sdp" />
+
+            <Space
+                android:id="@+id/space_register_left"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="@dimen/match_constraint"
+                app:layout_constraintEnd_toStartOf="@+id/tv_register_message"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_register_message" />
+
+            <TextView
+                android:id="@+id/tv_register_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/belum_punya_akun"
+                app:layout_constraintEnd_toStartOf="@id/tv_register"
+                app:layout_constraintStart_toEndOf="@id/space_register_left"
+                app:layout_constraintTop_toBottomOf="@+id/btn_fingerprint" />
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/daftar_sekarang"
+                android:textColor="@color/color_primary"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_register_message"
+                app:layout_constraintEnd_toStartOf="@+id/space_register_right"
+                app:layout_constraintStart_toEndOf="@+id/tv_register_message"
+                app:layout_constraintTop_toTopOf="@id/tv_register_message" />
+
+            <Space
+                android:id="@+id/space_register_right"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="@dimen/match_constraint"
+                android:layout_marginStart="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_register"
+                app:layout_constraintTop_toTopOf="@+id/tv_register_message" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="v_progress_bar, progress_bar"
+                tools:visibility="gone" />
+
+            <View
+                android:id="@+id/v_progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_modal_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:translationZ="@dimen/_3sdp" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:translationZ="@dimen/_3sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

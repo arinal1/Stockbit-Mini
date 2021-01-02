@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "883848901887",
+    "project_id": "stockbit-mini",
+    "storage_bucket": "stockbit-mini.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883848901887:android:8db34a4b17f8736d9888ca",
+        "android_client_info": {
+          "package_name": "com.arinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883848901887-bhno9v0ibjqa15qt1lo4gn8q85non67r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arinal",
+            "certificate_hash": "b6cdc4ab5b029f8d35b6c972b81aa1616c070229"
+          }
+        },
+        {
+          "client_id": "883848901887-r3ms8702g7cubhe5drcm1pnou6r540jj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4x4C9wKtL57rM_pJyTPrjBOm6r2DQBps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883848901887-r3ms8702g7cubhe5drcm1pnou6r540jj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
