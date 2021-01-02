@@ -10,6 +10,7 @@ class LoginViewModel : ViewModel() {
     val email = MutableLiveData("")
     val password = MutableLiveData("")
     val isLoading = MutableLiveData(false)
+    fun showLoading(show: Boolean) = isLoading.postValue(show)
 
     private val _googleLogin = MutableLiveData<Event<Unit>>()
     val googleLogin: LiveData<Event<Unit>> get() = _googleLogin

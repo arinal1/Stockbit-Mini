@@ -6,4 +6,5 @@ object Constants {
     const val GOOGLE = "google"
     const val EMAIL = "email"
     const val FINGERPRINT = "fingerprint"
+    const val REQ_CODE_GOOGLE = 9001
 }
