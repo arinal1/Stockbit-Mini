@@ -39,6 +39,7 @@ class AccountViewModel : ViewModel() {
         name.value = ""
     }
 
+    val hasFingerprint = MutableLiveData(false)
     val isLoading = MutableLiveData(false)
     fun showLoading(show: Boolean) = isLoading.postValue(show)
 

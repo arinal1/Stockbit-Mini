@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.arinal.ui.account.AccountViewModel" />
@@ -172,6 +174,7 @@
                 android:text="@string/masuk_dengan_fingerprint"
                 android:textAllCaps="false"
                 android:textColor="@color/color_primary"
+                android:visibility="@{viewModel.hasFingerprint ? View.VISIBLE : View.GONE}"
                 app:backgroundTint="@color/color_on_primary"
                 app:layout_constraintEnd_toEndOf="@id/btn_login_google"
                 app:layout_constraintStart_toStartOf="@id/btn_login_google"

@@ -7,4 +7,5 @@ object Constants {
     const val EMAIL = "email"
     const val FINGERPRINT = "fingerprint"
     const val REQ_CODE_GOOGLE = 9001
+    const val REQ_CODE_FINGERPRINT = 9002
 }

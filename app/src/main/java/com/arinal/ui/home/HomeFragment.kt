@@ -42,7 +42,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 googleSignInClient.revokeAccess()
             }
         }
+        val biometric = prefHelper.getInt(PreferencesKey.HAS_BIOMETRIC)
         prefHelper.clearAllPreferences()
+        prefHelper.setInt(PreferencesKey.HAS_BIOMETRIC, biometric)
         findNavController().navigate(R.id.action_homeFragment_to_accountFragment)
     }
 

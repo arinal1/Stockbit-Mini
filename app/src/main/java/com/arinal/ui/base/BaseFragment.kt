@@ -34,7 +34,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
     open fun initViews() = Unit
     abstract fun observeLiveData()
 
-    fun showSnackBar(message:String) = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+    fun showSnackBar(message: String) = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).apply { show() }
 
     fun hideKeyboard(): Boolean {
         val view = activity?.currentFocus

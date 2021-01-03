@@ -29,4 +29,9 @@
     <string name="register_password_subtitle">Masukkan minimal 6 karakter.</string>
     <string name="selanjutnya">Selanjutnya</string>
     <string name="register_failed">Gagal mendaftar akun baru</string>
+    <string name="no_fingerprint">Tidak ada fingerprint yang terdaftar</string>
+    <string name="tambah">Tambah</string>
+    <string name="fingerprint_failed">Gagal mengautentikasi sidik jari</string>
+    <string name="fingerprint_guide">Tempelkan sidik jari pada sensor</string>
+    <string name="batalkan">Batalkan</string>
 </resources>

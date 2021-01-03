@@ -6,6 +6,7 @@ enum class PreferencesKey {
     USER_NAME,
     USER_EMAIL,
     USER_FINGERPRINT,
-    USER_LOGIN_METHOD
+    USER_LOGIN_METHOD,
+    HAS_BIOMETRIC
 
 }
