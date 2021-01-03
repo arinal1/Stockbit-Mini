@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.util.*
 
 class SplashFragment : BaseFragment<FragmentSplashBinding, MainViewModel>() {
 
@@ -26,6 +27,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, MainViewModel>() {
         lifecycleScope.launch {
             val biometric = BiometricManager.from(requireContext()).canAuthenticate()
             prefHelper.setInt(PreferencesKey.HAS_BIOMETRIC, biometric)
+            if (prefHelper.getString(PreferencesKey.INSTALLATION_ID).isEmpty()) {
+                val id: String = UUID.randomUUID().toString()
+                prefHelper.setString(PreferencesKey.INSTALLATION_ID, id)
+            }
             delay(1500)
             findNavController().navigate(
                 if (prefHelper.getString(USER_ID) == "") R.id.action_splashFragment_to_accountFragment

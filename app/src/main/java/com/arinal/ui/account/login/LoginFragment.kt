@@ -19,6 +19,7 @@ import com.arinal.common.onTouchBrighterEffect
 import com.arinal.common.onTouchDarkerEffect
 import com.arinal.common.preferences.PreferencesHelper
 import com.arinal.common.preferences.PreferencesKey
+import com.arinal.data.model.UserData
 import com.arinal.databinding.FragmentLoginBinding
 import com.arinal.ui.account.AccountViewModel
 import com.arinal.ui.base.BaseFragment
@@ -29,12 +30,9 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -43,6 +41,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
 
     private val auth by lazy { Firebase.auth }
     private val callbackManager by lazy { CallbackManager.Factory.create() }
+    private val db by lazy { FirebaseFirestore.getInstance() }
     private val googleSignInIntent by lazy { GoogleSignIn.getClient(requireActivity(), gso).signInIntent }
     private val gso by lazy {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -74,7 +73,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
             val isPasswordValid = password.value?.length ?: 0 >= 6
             binding.tilEmail.error = if (isEmailValid) "" else getString(R.string.email_invalid)
             binding.tilPassword.error = if (isPasswordValid) "" else getString(R.string.password_invalid)
-            if (isEmailValid && isPasswordValid) this@LoginFragment.emailLogin()
+            if (isEmailValid && isPasswordValid) emailLogin(email.value ?: "", password.value ?: "")
         })
         fingerprintLogin.observe(viewLifecycleOwner, EventObserver {
             val biometric = prefHelper.getInt(PreferencesKey.HAS_BIOMETRIC)
@@ -144,7 +143,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    showSnackBar("Berhasil")
+                    fingerprintLogin()
                 }
             })
     }
@@ -162,12 +161,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
         }
     }
 
-    private fun googleLogin(data: Intent?) {
-        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+    private fun googleLogin(intent: Intent?) {
+        val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
         try {
             val account = task.getResult(ApiException::class.java)!!
             val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-            login(credential, Constants.GOOGLE, R.string.google_login_failed)
+            val data = hashMapOf("token" to (account.idToken ?: ""))
+            login(credential, Constants.GOOGLE, R.string.google_login_failed, data)
         } catch (e: ApiException) {
             showSnackBar(getString(R.string.google_login_failed))
         }
@@ -184,39 +184,77 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
                 val token = result?.accessToken?.token
                 if (token != null) {
                     val credential = FacebookAuthProvider.getCredential(token)
-                    login(credential, Constants.FACEBOOK, R.string.facebook_login_failed)
+                    val data = hashMapOf("token" to token)
+                    login(credential, Constants.FACEBOOK, R.string.facebook_login_failed, data)
                 }
             }
         }
     }
 
-    private fun emailLogin() {
+    private fun emailLogin(email: String, password: String) {
         hideKeyboard()
         viewModel.showLoading(true)
-        auth.signInWithEmailAndPassword(viewModel.email.value ?: "", viewModel.password.value ?: "")
-            .addOnCompleteListener {
-                onLoginResult(it, Constants.EMAIL, R.string.email_login_failed)
+        val credential = EmailAuthProvider.getCredential(email, password)
+        val data = hashMapOf("email" to email, "password" to password)
+        login(credential, Constants.EMAIL, R.string.email_login_failed, data)
+    }
+
+    private fun fingerprintLogin() {
+        viewModel.showLoading(true)
+        val onFailed: () -> Unit = {
+            viewModel.showLoading(false)
+            showSnackBar(getString(R.string.fingerprint_login_failed))
+        }
+        val id = prefHelper.getString(PreferencesKey.INSTALLATION_ID)
+        db.collection("fingerprints").document(id).get()
+            .addOnFailureListener { onFailed() }
+            .addOnSuccessListener {
+                val uid = it["uid"].toString()
+                db.collection("users").document(uid).get()
+                    .addOnFailureListener { onFailed() }
+                    .addOnSuccessListener { user ->
+                        val data = user.toObject(UserData::class.java)
+                        if (data == null) onFailed()
+                        else data.run {
+                            val credential = when {
+                                google != null -> GoogleAuthProvider.getCredential(google?.token, null)
+                                facebook != null -> FacebookAuthProvider.getCredential(facebook?.token ?: "")
+                                else -> EmailAuthProvider.getCredential(email?.email ?: "", email?.password ?: "")
+                            }
+                            val method = getMethod()
+                            val errorMessage = getErrorMessage()
+                            login(credential, method, errorMessage)
+                        }
+                    }
             }
     }
 
-    private fun login(credential: AuthCredential, method: String, errorMessage: Int) {
+    private fun login(credential: AuthCredential, method: String, errorMessage: Int, data: HashMap<String, String>? = null) {
         viewModel.showLoading(true)
         auth.signInWithCredential(credential).addOnCompleteListener {
-            onLoginResult(it, method, errorMessage)
+            if (!it.isSuccessful) showSnackBar(getString(errorMessage))
+            else {
+                val user = auth.currentUser
+                prefHelper.setString(PreferencesKey.USER_ID, user?.uid ?: "")
+                prefHelper.setString(PreferencesKey.USER_NAME, user?.displayName ?: "")
+                prefHelper.setString(PreferencesKey.USER_EMAIL, user?.email ?: "")
+                prefHelper.setString(PreferencesKey.USER_LOGIN_METHOD, method)
+                if (data == null) navigateHome()
+                else saveData(user?.uid ?: "", method, data)
+            }
         }
     }
 
-    private fun onLoginResult(task: Task<AuthResult>, method: String, errorMessage: Int) {
-        if (!task.isSuccessful) showSnackBar(getString(errorMessage))
-        else {
-            val user = auth.currentUser
-            prefHelper.setString(PreferencesKey.USER_ID, user?.uid ?: "")
-            prefHelper.setString(PreferencesKey.USER_NAME, user?.displayName ?: "")
-            prefHelper.setString(PreferencesKey.USER_EMAIL, user?.email ?: "")
-            prefHelper.setString(PreferencesKey.USER_LOGIN_METHOD, method)
-            viewModel.navigateToHome()
-            viewModel.clearData()
-        }
+    private fun saveData(uid: String, method: String, data: HashMap<String, String>) {
+        db.collection("users")
+            .document(uid)
+            .update(method, data)
+            .addOnCompleteListener { navigateHome() }
+    }
+
+    private fun navigateHome() {
+        viewModel.navigateToHome()
+        viewModel.clearData()
         viewModel.showLoading(false)
     }
 

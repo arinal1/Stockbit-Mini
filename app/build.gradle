@@ -53,9 +53,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
     implementation platform("com.google.firebase:firebase-bom:$firebaseVersion")
-    implementation "com.google.android.gms:play-services-auth:$gmsVersion"
+    implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation "com.facebook.android:facebook-login:$facebookVersion"
+    implementation "com.google.android.gms:play-services-auth:$gmsVersion"
 
     implementation project(':data')
     implementation project(':common')
