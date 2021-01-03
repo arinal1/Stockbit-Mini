@@ -18,9 +18,13 @@ class RegisterNameFragment : BaseFragment<FragmentRegisterNameBinding, AccountVi
         viewModel.navigateNext.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_registerNameFragment_to_registerPasswordFragment)
         })
+        viewModel.navigateToSupport.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(R.id.action_registerNameFragment_to_supportFragment)
+        })
     }
 
     override fun initViews() {
+        viewModel.showProgress.value = true
         viewModel.setProgress(66)
     }
 

@@ -1,5 +1,6 @@
 package com.arinal.ui.account.register
 
+import androidx.navigation.fragment.findNavController
 import com.arinal.R
 import com.arinal.common.Constants
 import com.arinal.common.EventObserver
@@ -23,6 +24,9 @@ class RegisterPasswordFragment : BaseFragment<FragmentRegisterPasswordBinding, A
     override fun setLayout() = R.layout.fragment_register_password
 
     override fun observeLiveData() = with(viewModel) {
+        viewModel.navigateToSupport.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(R.id.action_registerPasswordFragment_to_supportFragment)
+        })
         navigateNext.observe(viewLifecycleOwner, EventObserver {
             hideKeyboard()
             if (password.value?.length ?: 0 < 6) binding.tilPassword.error = getString(R.string.password_invalid)
@@ -50,6 +54,7 @@ class RegisterPasswordFragment : BaseFragment<FragmentRegisterPasswordBinding, A
     }
 
     override fun initViews() {
+        viewModel.showProgress.value = true
         viewModel.setProgress(100)
         viewModel.password.value = ""
     }

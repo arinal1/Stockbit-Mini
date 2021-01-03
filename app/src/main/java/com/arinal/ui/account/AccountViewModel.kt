@@ -76,9 +76,9 @@ class AccountViewModel : ViewModel() {
     val navigateBack: LiveData<Event<Unit>> get() = _navigateBack
     fun navigateBack() = _navigateBack.postValue(Event(Unit))
 
-    private val _navigateToHelp = MutableLiveData<Event<Unit>>()
-    val navigateToHelp: LiveData<Event<Unit>> get() = _navigateToHelp
-    fun navigateToHelp() = _navigateToHelp.postValue(Event(Unit))
+    private val _navigateToSupport = MutableLiveData<Event<Unit>>()
+    val navigateToSupport: LiveData<Event<Unit>> get() = _navigateToSupport
+    fun navigateToSupport() = _navigateToSupport.postValue(Event(Unit))
 
     private val _navigateToHome = MutableLiveData<Event<Unit>>()
     val navigateToHome: LiveData<Event<Unit>> get() = _navigateToHome

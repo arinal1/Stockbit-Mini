@@ -28,6 +28,9 @@ class ForgetPasswordFragment : BaseFragment<FragmentForgetPasswordBinding, Accou
                 resetPassword()
             }
         })
+        viewModel.navigateToSupport.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(R.id.action_forgetPasswordFragment_to_supportFragment)
+        })
     }
 
     private fun resetPassword() {

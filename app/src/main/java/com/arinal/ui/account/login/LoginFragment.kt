@@ -88,6 +88,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
         forgetPassword.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
         })
+        navigateToSupport.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(R.id.action_loginFragment_to_supportFragment)
+        })
     }
 
     override fun initViews() {

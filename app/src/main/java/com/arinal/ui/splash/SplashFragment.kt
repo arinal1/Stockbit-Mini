@@ -1,11 +1,9 @@
 package com.arinal.ui.splash
 
-import androidx.biometric.BiometricManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.arinal.R
 import com.arinal.common.preferences.PreferencesHelper
-import com.arinal.common.preferences.PreferencesKey
 import com.arinal.common.preferences.PreferencesKey.USER_ID
 import com.arinal.databinding.FragmentSplashBinding
 import com.arinal.ui.MainViewModel
@@ -14,7 +12,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.util.*
 
 class SplashFragment : BaseFragment<FragmentSplashBinding, MainViewModel>() {
 
@@ -25,12 +22,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, MainViewModel>() {
 
     override fun initViews() {
         lifecycleScope.launch {
-            val biometric = BiometricManager.from(requireContext()).canAuthenticate()
-            prefHelper.setInt(PreferencesKey.HAS_BIOMETRIC, biometric)
-            if (prefHelper.getString(PreferencesKey.INSTALLATION_ID).isEmpty()) {
-                val id: String = UUID.randomUUID().toString()
-                prefHelper.setString(PreferencesKey.INSTALLATION_ID, id)
-            }
             delay(1500)
             findNavController().navigate(
                 if (prefHelper.getString(USER_ID) == "") R.id.action_splashFragment_to_accountFragment

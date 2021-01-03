@@ -18,9 +18,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding, AccountViewModel>()
             findNavController().navigate(R.id.action_accountFragment_to_homeFragment)
         })
         viewModel.navigateBack.observe(viewLifecycleOwner, EventObserver { activity?.onBackPressed() })
-        viewModel.navigateToHelp.observe(viewLifecycleOwner, EventObserver {
-
-        })
+        viewModel.navigateToSupport.observe(viewLifecycleOwner, EventObserver { hideKeyboard() })
     }
 
 }

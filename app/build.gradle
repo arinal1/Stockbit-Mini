@@ -58,6 +58,8 @@ dependencies {
     implementation "com.facebook.android:facebook-login:$facebookVersion"
     implementation "com.google.android.gms:play-services-auth:$gmsVersion"
 
+    implementation "im.crisp:crisp-sdk:$crispVersion"
+
     implementation project(':data')
     implementation project(':common')
 }

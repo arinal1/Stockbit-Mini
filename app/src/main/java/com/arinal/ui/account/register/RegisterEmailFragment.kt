@@ -24,6 +24,9 @@ class RegisterEmailFragment : BaseFragment<FragmentRegisterEmailBinding, Account
                 findNavController().navigate(R.id.action_registerEmailFragment_to_registerNameFragment)
             }
         })
+        viewModel.navigateToSupport.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(R.id.action_registerEmailFragment_to_supportFragment)
+        })
     }
 
     override fun initViews() {
