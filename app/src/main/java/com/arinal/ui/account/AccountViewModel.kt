@@ -14,7 +14,8 @@ class AccountViewModel : ViewModel() {
     private var job: Job? = null
 
     val title = MutableLiveData("")
-    val isOnRegister = MutableLiveData(false)
+    val showBack = MutableLiveData(false)
+    val showProgress = MutableLiveData(false)
     val progress = MutableLiveData(0f)
     fun setProgress(progress: Int) {
         val currentProgress = ((this.progress.value ?: .33f) * 100).toInt()

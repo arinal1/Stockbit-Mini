@@ -28,7 +28,8 @@ class RegisterEmailFragment : BaseFragment<FragmentRegisterEmailBinding, Account
 
     override fun initViews() {
         viewModel.title.value = getString(R.string.daftar)
-        viewModel.isOnRegister.value = true
+        viewModel.showBack.value = true
+        viewModel.showProgress.value = true
         viewModel.setProgress(33)
     }
 

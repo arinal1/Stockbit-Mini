@@ -16,6 +16,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
+            app:destination="@id/forgetPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/registerEmailFragment"
@@ -48,4 +55,9 @@
         android:name="com.arinal.ui.account.register.RegisterPasswordFragment"
         android:label="RegisterPasswordFragment"
         tools:layout="@layout/fragment_register_password" />
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.arinal.ui.account.forgetpassword.ForgetPasswordFragment"
+        android:label="ForgetPasswordFragment"
+        tools:layout="@layout/fragment_forget_password" />
 </navigation>

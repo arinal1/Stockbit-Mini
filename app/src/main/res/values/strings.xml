@@ -35,4 +35,7 @@
     <string name="fingerprint_failed">Gagal mengautentikasi sidik jari</string>
     <string name="fingerprint_guide">Tempelkan sidik jari pada sensor</string>
     <string name="batalkan">Batalkan</string>
+    <string name="lupa_password_title">Lupa Password?</string>
+    <string name="lupa_password_subtitle">Masukkan alamat email Anda yang sudah terdaftar di Stockbit Mini untuk buat password baru</string>
+    <string name="reset_password_success">Email untuk reset password berhasil dikirim ke alamat email Anda</string>
 </resources>

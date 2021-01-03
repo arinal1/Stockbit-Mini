@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_11sdp"
             android:backgroundTint="@android:color/transparent"
-            android:visibility="@{viewModel.isOnRegister ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.showBack ? View.VISIBLE : View.GONE}"
             app:cardCornerRadius="@dimen/value_16"
             app:cardElevation="@dimen/match_constraint"
             app:layout_constraintBottom_toBottomOf="@id/tv_title"
@@ -79,7 +79,7 @@
             android:id="@+id/group_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.isOnRegister() ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.showProgress ? View.VISIBLE : View.GONE}"
             app:constraint_referenced_ids="v_progress_background, v_progress" />
 
         <View

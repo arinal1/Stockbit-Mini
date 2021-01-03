@@ -87,13 +87,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         })
         forgetPassword.observe(viewLifecycleOwner, EventObserver {
-
+            findNavController().navigate(R.id.action_loginFragment_to_forgetPasswordFragment)
         })
     }
 
     override fun initViews() {
         viewModel.title.value = getString(R.string.masuk)
-        viewModel.isOnRegister.value = false
+        viewModel.showBack.value = false
+        viewModel.showProgress.value = false
         viewModel.setProgress(0)
         when (context?.resources?.configuration?.uiMode?.and(UI_MODE_NIGHT_MASK)) {
             UI_MODE_NIGHT_YES -> {
