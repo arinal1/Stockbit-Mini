@@ -24,7 +24,7 @@ class AccountViewModel : ViewModel() {
             job = launch {
                 for (i in range) {
                     this@AccountViewModel.progress.value = i / 100f
-                    delay(3)
+                    delay(6)
                 }
             }
         }
@@ -33,6 +33,12 @@ class AccountViewModel : ViewModel() {
     val email = MutableLiveData("")
     val password = MutableLiveData("")
     val name = MutableLiveData("")
+    fun clearData() {
+        email.value = ""
+        password.value = ""
+        name.value = ""
+    }
+
     val isLoading = MutableLiveData(false)
     fun showLoading(show: Boolean) = isLoading.postValue(show)
 

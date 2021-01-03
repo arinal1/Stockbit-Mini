@@ -1,9 +1,11 @@
 package com.arinal.ui.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -33,5 +35,14 @@ abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
     abstract fun observeLiveData()
 
     fun showSnackBar(message:String) = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+
+    fun hideKeyboard(): Boolean {
+        val view = activity?.currentFocus
+        return if (view == null) false
+        else {
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
 
 }

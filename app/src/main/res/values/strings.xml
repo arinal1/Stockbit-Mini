@@ -7,7 +7,10 @@
     <string name="masuk_dengan_facebook">Masuk Dengan Facebook</string>
     <string name="atau">Atau</string>
     <string name="email">Email</string>
+    <string name="email_invalid">Email tidak valid</string>
     <string name="password">Password</string>
+    <string name="password_invalid">Password harus terdiri dari minimal 6 karakter</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
     <string name="lupa_password">Lupa Password</string>
     <string name="login">Login</string>
     <string name="masuk_dengan_fingerprint">Masuk Dengan Fingerprint</string>
@@ -25,5 +28,5 @@
     <string name="register_password_title">Buat Password kamu</string>
     <string name="register_password_subtitle">Masukkan minimal 6 karakter.</string>
     <string name="selanjutnya">Selanjutnya</string>
-    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="register_failed">Gagal mendaftar akun baru</string>
 </resources>

@@ -63,6 +63,7 @@
                 android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
+                android:enabled="@{!viewModel.name.empty}"
                 android:onClick="@{()->viewModel.navigateNext()}"
                 android:text="@string/selanjutnya"
                 android:textAllCaps="false"

@@ -66,6 +66,7 @@
                 android:onClick="@{()->viewModel.navigateNext()}"
                 android:text="@string/selanjutnya"
                 android:textAllCaps="false"
+                android:enabled="@{!viewModel.email.empty}"
                 app:cornerRadius="@dimen/match_constraint"
                 app:layout_constraintBottom_toBottomOf="@id/space_button" />
 

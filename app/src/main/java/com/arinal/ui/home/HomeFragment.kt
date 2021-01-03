@@ -35,9 +35,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     private fun logout() {
         Firebase.auth.signOut()
-        prefHelper.clearPreference(PreferencesKey.USER_ID)
-        prefHelper.clearPreference(PreferencesKey.USER_NAME)
-        prefHelper.clearPreference(PreferencesKey.USER_EMAIL)
         when (prefHelper.getString(PreferencesKey.USER_LOGIN_METHOD)) {
             Constants.FACEBOOK -> LoginManager.getInstance().logOut()
             Constants.GOOGLE -> {
@@ -45,7 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 googleSignInClient.revokeAccess()
             }
         }
-        prefHelper.clearPreference(PreferencesKey.USER_LOGIN_METHOD)
+        prefHelper.clearAllPreferences()
         findNavController().navigate(R.id.action_homeFragment_to_accountFragment)
     }
 
