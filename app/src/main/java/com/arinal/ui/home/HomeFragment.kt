@@ -4,13 +4,24 @@ import androidx.appcompat.app.AlertDialog
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.arinal.BR
 import com.arinal.R
 import com.arinal.common.Constants
+import com.arinal.common.EndlessScrollListener
+import com.arinal.common.EventObserver
 import com.arinal.common.preferences.PreferencesHelper
 import com.arinal.common.preferences.PreferencesKey
 import com.arinal.databinding.FragmentHomeBinding
+import com.arinal.databinding.HeaderNavigationDrawerBinding
 import com.arinal.ui.base.BaseFragment
+import com.arinal.ui.home.adapter.ShimmerAdapter
+import com.arinal.ui.home.adapter.WatchListAdapter
+import com.bumptech.glide.Glide
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -23,6 +34,9 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     private val db by lazy { FirebaseFirestore.getInstance() }
+    private val endlessScroll = object : EndlessScrollListener() {
+        override fun onLoadMore() = viewModel.getWatchList()
+    }
     private val fingerprintDialog by lazy {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.activate_fingerprint)
@@ -49,16 +63,48 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             .setNegativeButtonText(getString(R.string.batalkan))
             .build()
     }
+    private val shimmerAdapter by lazy { ShimmerAdapter(layoutInflater, 20) }
+    private val watchListAdapter by lazy { WatchListAdapter(layoutInflater) {} }
     override val viewModel: HomeViewModel by sharedViewModel()
 
     override fun setLayout() = R.layout.fragment_home
 
     override fun observeLiveData() {
-        binding.btnLogout.setOnClickListener { logout() }
+        viewModel.openBurger.observe(viewLifecycleOwner, EventObserver {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+        })
+        viewModel.logout.observe(viewLifecycleOwner, EventObserver { logout() })
+        viewModel.watchList.observe(viewLifecycleOwner, { watchListAdapter.submitList(it) })
     }
 
     override fun initViews() {
         checkFingerprint()
+        AppBarConfiguration(findNavController().graph, binding.drawerLayout)
+        binding.navigationView.setupWithNavController(findNavController())
+        val headerNavDrawer = DataBindingUtil.inflate<HeaderNavigationDrawerBinding>(
+            layoutInflater,
+            R.layout.header_navigation_drawer,
+            binding.navigationView,
+            true
+        )
+        headerNavDrawer.setVariable(BR.viewModel, viewModel)
+        val profileUrl = prefHelper.getString(PreferencesKey.USER_PROFILE_URL)
+        viewModel.setProfile(
+            prefHelper.getString(PreferencesKey.USER_NAME),
+            prefHelper.getString(PreferencesKey.USER_EMAIL),
+            profileUrl
+        )
+        Glide.with(requireContext()).load(profileUrl).into(headerNavDrawer.ivProfile)
+        binding.rvShimmer.adapter = shimmerAdapter
+        binding.rvWatchlist.adapter = watchListAdapter
+        binding.rvWatchlist.addOnScrollListener(endlessScroll)
+        binding.swipeLayout.setOnRefreshListener {
+            binding.swipeLayout.isRefreshing = false
+            viewModel.clearData()
+            endlessScroll.resetData()
+            viewModel.getWatchList()
+        }
+        viewModel.initData()
     }
 
     private fun checkFingerprint() {

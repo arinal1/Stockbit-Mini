@@ -1,6 +1,7 @@
 package com.arinal.common
 
 object Constants {
+    const val DATA_EMPTY = "Tidak Ada Data"
     const val FACEBOOK = "facebook"
     const val GOOGLE = "google"
     const val EMAIL = "email"

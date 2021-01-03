@@ -41,4 +41,10 @@
     <string name="activate_fingerprint_failed">Gagal mengaktifkan login dengan fingerprint</string>
     <string name="ya">Ya</string>
     <string name="lain_kali">Lain Kali</string>
+    <string name="mini">Mini</string>
+    <string name="burger">Burger</string>
+    <string name="profile">Profile</string>
+    <string name="log_out">Log out</string>
+    <string name="all_watchlist">All Watchlist</string>
+    <string name="swipe_down_to_refresh">Swipe Down To Refresh</string>
 </resources>

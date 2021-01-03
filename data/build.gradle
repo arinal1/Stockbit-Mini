@@ -10,6 +10,7 @@ android {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         buildConfigField("String", "BASE_URL", "\"https://min-api.cryptocompare.com/data/\"")
+        buildConfigField("String", "API_KEY", "\"41643824d611d6a7ccef7663f08d7b6b145e9f1fc3e89bed0eb09fd34796cc7d\"")
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

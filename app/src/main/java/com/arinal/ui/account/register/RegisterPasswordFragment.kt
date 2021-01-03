@@ -39,6 +39,7 @@ class RegisterPasswordFragment : BaseFragment<FragmentRegisterPasswordBinding, A
                             prefHelper.setString(PreferencesKey.USER_NAME, name.value ?: "")
                             prefHelper.setString(PreferencesKey.USER_EMAIL, user?.email ?: "")
                             prefHelper.setString(PreferencesKey.USER_LOGIN_METHOD, Constants.EMAIL)
+                            prefHelper.setString(PreferencesKey.USER_PROFILE_URL, user?.photoUrl.toString())
                             viewModel.navigateToHome()
                             viewModel.clearData()
                         }

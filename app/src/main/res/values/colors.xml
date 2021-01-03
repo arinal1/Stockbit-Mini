@@ -4,12 +4,13 @@
     <color name="color_primary">#24292E</color>
     <color name="color_primary_variant">#6A737D</color>
     <color name="color_on_primary">#FFFFFFFF</color>
-    <color name="color_secondary">#0366D6</color>
-    <color name="color_secondary_variant">#05264C</color>
+    <color name="color_secondary">#00AB6B</color>
+    <color name="color_secondary_variant">#00613D</color>
     <color name="color_on_secondary">#FF000000</color>
     <color name="color_text">#333333</color>
     <color name="color_text_secondary">#B5B5B5</color>
     <color name="color_separator">#F5F5F5</color>
     <color name="color_ripple">#E1E1E1</color>
     <color name="color_modal_background">#80000000</color>
+    <color name="color_red">#EA4335</color>
 </resources>

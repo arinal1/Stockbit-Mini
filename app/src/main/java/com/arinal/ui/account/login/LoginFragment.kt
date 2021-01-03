@@ -238,6 +238,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
                 prefHelper.setString(PreferencesKey.USER_ID, user?.uid ?: "")
                 prefHelper.setString(PreferencesKey.USER_NAME, user?.displayName ?: "")
                 prefHelper.setString(PreferencesKey.USER_EMAIL, user?.email ?: "")
+                prefHelper.setString(PreferencesKey.USER_PROFILE_URL, user?.photoUrl.toString())
                 prefHelper.setString(PreferencesKey.USER_LOGIN_METHOD, method)
                 if (data == null) navigateHome()
                 else saveData(user?.uid ?: "", method, data)

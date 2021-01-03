@@ -2,6 +2,7 @@
 <resources>
     <dimen name="match_constraint">0dp</dimen>
     <dimen name="value_4">4dp</dimen>
+    <dimen name="value_7">7dp</dimen>
     <dimen name="value_8">8dp</dimen>
     <dimen name="value_16">16dp</dimen>
     <dimen name="text_12">12sp</dimen>
