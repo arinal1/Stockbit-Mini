@@ -5,6 +5,7 @@ import android.content.res.Configuration.*
 import android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import android.hardware.biometrics.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import android.provider.Settings
+import android.util.Patterns
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
@@ -28,7 +29,9 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -67,10 +70,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
             binding.facebookLogin.callOnClick()
         })
         emailLogin.observe(viewLifecycleOwner, EventObserver {
-
+            val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email.value ?: "").matches()
+            val isPasswordValid = password.value?.length ?: 0 >= 6
+            binding.tilEmail.error = if (isEmailValid) "" else getString(R.string.email_invalid)
+            binding.tilPassword.error = if (isPasswordValid) "" else getString(R.string.password_invalid)
+            if (isEmailValid && isPasswordValid) this@LoginFragment.emailLogin()
         })
         fingerprintLogin.observe(viewLifecycleOwner, EventObserver {
-            if (prefHelper.getInt(PreferencesKey.HAS_BIOMETRIC) != BIOMETRIC_ERROR_NONE_ENROLLED) biometricPrompt.authenticate(promptInfo)
+            val biometric = prefHelper.getInt(PreferencesKey.HAS_BIOMETRIC)
+            if (biometric != BIOMETRIC_ERROR_NONE_ENROLLED) biometricPrompt.authenticate(promptInfo)
             else showSnackBar(getString(R.string.no_fingerprint)).apply {
                 setAction(getString(R.string.tambah)) { enrollFingerprint() }
             }
@@ -181,20 +189,34 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, AccountViewModel>() {
         }
     }
 
+    private fun emailLogin() {
+        hideKeyboard()
+        viewModel.showLoading(true)
+        auth.signInWithEmailAndPassword(viewModel.email.value ?: "", viewModel.password.value ?: "")
+            .addOnCompleteListener {
+                onLoginResult(it, Constants.EMAIL, R.string.email_login_failed)
+            }
+    }
+
     private fun login(credential: AuthCredential, method: String, errorMessage: Int) {
         viewModel.showLoading(true)
         auth.signInWithCredential(credential).addOnCompleteListener {
-            if (!it.isSuccessful) showSnackBar(getString(errorMessage))
-            else {
-                val user = auth.currentUser
-                prefHelper.setString(PreferencesKey.USER_ID, user?.uid ?: "")
-                prefHelper.setString(PreferencesKey.USER_NAME, user?.displayName ?: "")
-                prefHelper.setString(PreferencesKey.USER_EMAIL, user?.email ?: "")
-                prefHelper.setString(PreferencesKey.USER_LOGIN_METHOD, method)
-                viewModel.navigateToHome()
-            }
-            viewModel.showLoading(false)
+            onLoginResult(it, method, errorMessage)
         }
+    }
+
+    private fun onLoginResult(task: Task<AuthResult>, method: String, errorMessage: Int) {
+        if (!task.isSuccessful) showSnackBar(getString(errorMessage))
+        else {
+            val user = auth.currentUser
+            prefHelper.setString(PreferencesKey.USER_ID, user?.uid ?: "")
+            prefHelper.setString(PreferencesKey.USER_NAME, user?.displayName ?: "")
+            prefHelper.setString(PreferencesKey.USER_EMAIL, user?.email ?: "")
+            prefHelper.setString(PreferencesKey.USER_LOGIN_METHOD, method)
+            viewModel.navigateToHome()
+            viewModel.clearData()
+        }
+        viewModel.showLoading(false)
     }
 
 }

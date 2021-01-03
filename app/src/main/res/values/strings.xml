@@ -19,6 +19,7 @@
     <string name="help">Help</string>
     <string name="facebook_login_failed">Gagal login dengan facebook</string>
     <string name="google_login_failed">Gagal login dengan google</string>
+    <string name="email_login_failed">Gagal login dengan email</string>
     <string name="logout">Logout</string>
     <string name="back">Back</string>
     <string name="register_email_title">Apa Alamat Email Kamu?</string>
